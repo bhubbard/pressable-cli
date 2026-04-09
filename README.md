@@ -1,24 +1,35 @@
 # Pressable CLI
 
-A command-line interface to interact with the Pressable API.
+A modern, TypeScript-based command-line interface to interact with the Pressable API. Built for Node.js and Bun.
+
+## Features
+- **TypeScript & ESM**: Fully typed for better developer experience and modern standards.
+- **Bun Support**: Native support for the Bun runtime.
+- **Fetch API**: Uses native `fetch` (Node 18+) for cross-runtime compatibility.
+- **100% API Coverage**: Supports all documented endpoints in the Pressable API v1.
+- **Raw JSON Output**: All commands output pretty-printed JSON, perfect for piping into `jq`.
 
 ## Installation
 
-1.  Clone this repository:
-
+1.  **Clone the repository**:
     ```bash
     git clone https://github.com/your-username/pressable-cli.git
-    ```
-
-2.  Install the dependencies:
-
-    ```bash
     cd pressable-cli
-    npm install
     ```
 
-3.  Link the CLI to make it available globally:
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    # OR
+    bun install
+    ```
 
+3.  **Build the project**:
+    ```bash
+    npm run build
+    ```
+
+4.  **Link for global access**:
     ```bash
     npm link
     ```
@@ -26,294 +37,92 @@ A command-line interface to interact with the Pressable API.
 ## Configuration
 
 1.  Create a `.env` file in the root of the project.
-
-2.  Add your Pressable API credentials to the `.env` file:
-
-    ```
+2.  Add your Pressable API credentials:
+    ```env
     PRESSABLE_API_CLIENT_ID=your_client_id
     PRESSABLE_API_CLIENT_SECRET=your_client_secret
     ```
-
-    You can get your API credentials from [https://my.pressable.com/api-applications](https://my.pressable.com/api-applications).
-
-## Commands
-
-### Account
-
-*   `pressable account` - Get account details
-
-    ```bash
-    pressable account
-    ```
-
-*   `pressable activity` - Get account activity
-
-    ```bash
-    pressable activity
-    ```
-
-*   `pressable datacenters` - Get all datacenters
-
-    ```bash
-    pressable datacenters
-    ```
-
-*   `pressable php-versions` - Get all PHP versions
-
-    ```bash
-    pressable php-versions
-    ```
-
-### Sites
-
-*   `pressable sites` - List all sites
-
-    ```bash
-    pressable sites
-    ```
-
-*   `pressable site <siteId>` - Get details of a specific site
-
-    ```bash
-    pressable site 12345
-    ```
-
-*   `pressable create-site --name <name>` - Create a new site
-
-    ```bash
-    pressable create-site --name "My New Site"
-    ```
-
-*   `pressable delete-site <siteId>` - Delete a site
-
-    ```bash
-    pressable delete-site 12345
-    ```
-
-### Backups
-
-*   `pressable create-backup <siteId>` - Create a new backup
-
-    ```bash
-    pressable create-backup 12345
-    ```
-
-*   `pressable backups <siteId>` - Get all backups for a site
-
-    ```bash
-    pressable backups 12345
-    ```
-
-*   `pressable backup <siteId> <backupId>` - Get a specific backup
-
-    ```bash
-    pressable backup 12345 67890
-    ```
-
-*   `pressable restore-backup <siteId> <backupId>` - Restore a backup
-
-    ```bash
-    pressable restore-backup 12345 67890
-    ```
-
-### Collaborators
-
-*   `pressable collaborators` - Get all collaborators
-
-    ```bash
-    pressable collaborators
-    ```
-
-*   `pressable collaborator <collaboratorId>` - Get a specific collaborator
-
-    ```bash
-    pressable collaborator 12345
-    ```
-
-*   `pressable add-collaborator <siteId> <email>` - Add a collaborator to a site
-
-    ```bash
-    pressable add-collaborator 12345 john.doe@example.com
-    ```
-
-*   `pressable remove-collaborator <collaboratorId>` - Remove a collaborator
-
-    ```bash
-    pressable remove-collaborator 12345
-    ```
-
-### Edge Cache
-
-*   `pressable edge-cache-status <siteId>` - Get edge cache status for a site
-
-    ```bash
-    pressable edge-cache-status 12345
-    ```
-
-*   `pressable purge-edge-cache <siteId>` - Purge edge cache for a site
-
-    ```bash
-    pressable purge-edge-cache 12345
-    ```
-
-### Plugins
-
-*   `pressable plugins <siteId>` - Get all plugins for a site
-
-    ```bash
-    pressable plugins 12345
-    ```
-
-*   `pressable update-plugin <siteId> <plugin-slug>` - Update a plugin on a site
-
-    ```bash
-    pressable update-plugin 12345 my-plugin
-    ```
-
-### Must-Use Plugins
-
-*   `pressable mu-plugins <siteId>` - Get all must-use plugins for a site
-
-    ```bash
-    pressable mu-plugins 12345
-    ```
-
-*   `pressable create-mu-plugin <siteId> <name> <code_path>` - Create a must-use plugin for a site
-
-    ```bash
-    pressable create-mu-plugin 12345 "My MU Plugin" /path/to/plugin.php
-    ```
-
-*   `pressable delete-mu-plugin <siteId> <pluginId>` - Delete a must-use plugin from a site
-
-    ```bash
-    pressable delete-mu-plugin 12345 67890
-    ```
-
-### Themes
-
-*   `pressable themes <siteId>` - Get all themes for a site
-
-    ```bash
-    pressable themes 12345
-    ```
-
-*   `pressable update-theme <siteId> <theme-slug>` - Update a theme on a site
-
-    ```bash
-    pressable update-theme 12345 my-theme
-    ```
-
-### WordPress
-
-*   `pressable wordpress-users <siteId>` - Get all WordPress users for a site
-
-    ```bash
-    pressable wordpress-users 12345
-    ```
-
-*   `pressable create-wordpress-user <siteId> <username> <email>` - Create a new WordPress user on a site
-
-    ```bash
-    pressable create-wordpress-user 12345 john.doe john.doe@example.com
-    ```
-
-*   `pressable delete-wordpress-user <siteId> <userId>` - Delete a WordPress user from a site
-
-    ```bash
-    pressable delete-wordpress-user 12345 67890
-    ```
-
-*   `pressable wp-cli <siteId> <command>` - Run a WP-CLI command on a site
-
-    ```bash
-    pressable wp-cli 12345 "plugin list"
-    ```
-
-### DNS
-
-*   `pressable dns-zones <siteId>` - Get all DNS zones for a site
-
-    ```bash
-    pressable dns-zones 12345
-    ```
-
-*   `pressable create-dns-zone <siteId> <zoneName>` - Create a DNS zone for a site
-
-    ```bash
-    pressable create-dns-zone 12345 example.com
-    ```
-
-*   `pressable dns-zone <siteId> <zoneId>` - Get a specific DNS zone
-
-    ```bash
-    pressable dns-zone 12345 67890
-    ```
-
-*   `pressable delete-dns-zone <siteId> <zoneId>` - Delete a DNS zone
-
-    ```bash
-    pressable delete-dns-zone 12345 67890
-    ```
-
-*   `pressable dns-records <siteId> <zoneId>` - Get all DNS records for a zone
-
-    ```bash
-    pressable dns-records 12345 67890
-    ```
-
-*   `pressable create-dns-record <siteId> <zoneId> --type <type> --name <name> --content <content> --ttl <ttl>` - Create a DNS record for a zone
-
-    ```bash
-    pressable create-dns-record 12345 67890 --type A --name www --content 127.0.0.1 --ttl 3600
-    ```
-
-*   `pressable dns-record <siteId> <zoneId> <recordId>` - Get a specific DNS record
-
-    ```bash
-    pressable dns-record 12345 67890 11223
-    ```
-
-*   `pressable update-dns-record <siteId> <zoneId> <recordId> --type <type> --name <name> --content <content> --ttl <ttl>` - Update a DNS record
-
-    ```bash
-    pressable update-dns-record 12345 67890 11223 --type A --name www --content 127.0.0.2 --ttl 3600
-    ```
-
-*   `pressable delete-dns-record <siteId> <zoneId> <recordId>` - Delete a DNS record
-
-    ```bash
-    pressable delete-dns-record 12345 67890 11223
-    ```
-
-### Webhooks
-
-*   `pressable webhooks <siteId>` - Get all webhooks for a site
-
-    ```bash
-    pressable webhooks 12345
-    ```
-
-*   `pressable create-webhook <siteId> <url> <event>` - Create a webhook for a site
-
-    ```bash
-    pressable create-webhook 12345 https://example.com/webhook site.renamed
-    ```
-
-*   `pressable webhook <siteId> <webhookId>` - Get a specific webhook
-
-    ```bash
-    pressable webhook 12345 67890
-    ```
-
-*   `pressable update-webhook <siteId> <webhookId> --url <url> --event <event>` - Update a webhook
-
-    ```bash
-    pressable update-webhook 12345 67890 --url https://example.com/new-webhook --event site.renamed
-    ```
-
-*   `pressable delete-webhook <siteId> <webhookId>` - Delete a webhook
-
-    ```bash
-    pressable delete-webhook 12345 67890
-    ```
+    Get your credentials from [my.pressable.com/api-applications](https://my.pressable.com/api-applications).
+
+## Command Overview
+
+The CLI provides comprehensive management for your Pressable account and sites.
+
+### 👤 Account
+- `pressable account` - Get account details
+- `pressable account-update --php <v> --datacenter <id>` - Update default account settings
+- `pressable account-actions` - Get detailed account activity
+- `pressable account-addons` - List account add-ons
+- `pressable datacenters` - List all available datacenters
+- `pressable php-versions` - List supported PHP versions
+
+### 🏗️ Sites
+- `pressable sites [--search <term>] [--page <n>] [--limit <n>]` - List/search sites
+- `pressable site <siteId>` - Get site details
+- `pressable create-site --name <name>` - Create a new site
+- `pressable delete-site <siteId>` - Delete a site
+- `pressable site-validate <name>` - Check if a site name is available
+- `pressable site-disable <siteId>` - Disable a site
+- `pressable site-enable <siteId>` - Enable a site
+- `pressable site-convert <siteId> <live|staging|sandbox>` - Change site environment type
+- `pressable site-clone <siteId>` - Clone a site (requires additional params)
+- `pressable site-flush-cache <siteId>` - Flush object cache
+- `pressable site-maintenance <siteId> <on|off>` - Toggle maintenance mode
+- `pressable site-multisite <siteId> <on|off>` - Toggle multisite support
+- `pressable site-favorite <siteId>` - Toggle favorite status
+- `pressable site-login <siteId>` - Get One-Press Login URL
+
+### 💾 Backups
+- `pressable backups <siteId>` - List all backups
+- `pressable create-backup <siteId>` - Create a standard backup
+- `pressable restore-backup <siteId> <backupId>` - Restore a backup
+- `pressable site-ondemand-backups <siteId>` - List on-demand backups
+- `pressable site-ondemand-backup-create <siteId>` - Create an on-demand backup
+- `pressable site-ondemand-backup-download <siteId> <id>` - Get download link for on-demand backup
+
+### 🔗 Domains & SFTP
+- `pressable site-domains <siteId>` - List domains
+- `pressable site-domain-add <siteId> <domain>` - Add a domain
+- `pressable site-domain-delete <siteId> <id>` - Remove a domain
+- `pressable site-domain-primary <siteId> <id>` - Set primary domain
+- `pressable site-sftp-users <siteId>` - List SFTP users
+- `pressable site-sftp-reset <siteId> <user>` - Reset SFTP password
+
+### 🔌 WordPress Management
+- `pressable plugins <siteId>` - List plugins
+- `pressable plugin-install <siteId> <slug>` - Install a plugin
+- `pressable plugin-activate <siteId> <slug>` - Activate a plugin
+- `pressable plugin-deactivate <siteId> <slug>` - Deactivate a plugin
+- `pressable plugin-delete <siteId> <slug>` - Delete a plugin
+- `pressable themes <siteId>` - List themes
+- `pressable theme-install <siteId> <slug>` - Install a theme
+- `pressable theme-activate <siteId> <slug>` - Activate a theme
+- `pressable themes-delete <siteId> <slug>` - Delete a theme
+- `pressable wp-cli <siteId> "<command>"` - Run a WP-CLI command
+- `pressable site-bash <siteId> "<command>"` - Run a Bash command on the server
+
+### 📈 Monitoring & Utility
+- `pressable site-logs-php <siteId>` - Get PHP logs
+- `pressable site-logs-server <siteId>` - Get server logs
+- `pressable site-logs-activity <siteId>` - Get site activity logs
+- `pressable site-stats <siteId>` - Get site statistics
+- `pressable site-metrics <siteId>` - Get performance metrics
+- `pressable site-security-alerts <siteId>` - Get security alerts
+- `pressable site-firewall-rules <siteId>` - List egress firewall rules
+- `pressable site-cron <siteId>` - List cron jobs
+- `pressable site-usage-limits <siteId>` - Get DB/FS usage limits
+
+## Development
+
+**Run with Node (Direct)**:
+```bash
+npm run dev -- account
+```
+
+**Run with Bun**:
+```bash
+bun run bun:dev -- account
+```
+
+## License
+ISC
