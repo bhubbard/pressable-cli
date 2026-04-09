@@ -28,7 +28,12 @@ export const registerDnsCommands = (program) => {
         .option('--name <name>', 'Record name')
         .option('--content <content>', 'Record content')
         .option('--ttl <ttl>', 'Record TTL')
-        .action((siteId, zoneId, options) => handleAction(() => api.createDnsRecord(siteId, zoneId, { type: options.type, name: options.name, content: options.content, ttl: options.ttl })));
+        .action((siteId, zoneId, options) => handleAction(() => api.createDnsRecord(siteId, zoneId, {
+        type: options.type,
+        name: options.name,
+        content: options.content,
+        ttl: options.ttl
+    })));
     program
         .command('dns-record <siteId> <zoneId> <recordId>')
         .description('Get a specific DNS record')
@@ -40,7 +45,12 @@ export const registerDnsCommands = (program) => {
         .option('--name <name>', 'Record name')
         .option('--content <content>', 'Record content')
         .option('--ttl <ttl>', 'Record TTL')
-        .action((siteId, zoneId, recordId, options) => handleAction(() => api.updateDnsRecord(siteId, zoneId, recordId, { type: options.type, name: options.name, content: options.content, ttl: options.ttl })));
+        .action((siteId, zoneId, recordId, options) => handleAction(() => api.updateDnsRecord(siteId, zoneId, recordId, {
+        type: options.type,
+        name: options.name,
+        content: options.content,
+        ttl: options.ttl
+    })));
     program
         .command('delete-dns-record <siteId> <zoneId> <recordId>')
         .description('Delete a DNS record')

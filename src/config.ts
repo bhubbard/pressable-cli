@@ -16,7 +16,7 @@ export const loadConfig = (): Config | null => {
     }
     const data = fs.readFileSync(CONFIG_FILE, 'utf8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch {
     return null;
   }
 };

@@ -10,7 +10,7 @@ export const loadConfig = () => {
         const data = fs.readFileSync(CONFIG_FILE, 'utf8');
         return JSON.parse(data);
     }
-    catch (error) {
+    catch {
         return null;
     }
 };

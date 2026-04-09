@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 import * as api from '../api.js';
 import { handleAction } from '../utils.js';
+import fs from 'node:fs';
 
 export const registerPluginThemeCommands = (program: Command) => {
   // Plugins
@@ -44,7 +45,6 @@ export const registerPluginThemeCommands = (program: Command) => {
     .command('create-mu-plugin <siteId> <name> <code_path>')
     .description('Create a must-use plugin for a site')
     .action((siteId, name, code_path) => {
-      const fs = require('node:fs');
       const code = fs.readFileSync(code_path, 'utf8');
       return handleAction(() => api.createMuPlugin(siteId, { name, code }));
     });

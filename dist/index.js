@@ -11,9 +11,7 @@ import { registerBackupCommands } from './commands/backups.js';
 import { registerWordpressCommands } from './commands/wp.js';
 import { registerPluginThemeCommands, registerMonitoringCommands, registerCollaboratorCommands } from './commands/monitoring.js';
 import { registerDnsCommands, registerWebhookCommands } from './commands/dns.js';
-program
-    .version('1.0.0')
-    .description('A CLI to interact with the Pressable API');
+program.version('1.0.0').description('A CLI to interact with the Pressable API');
 // Register all command modules
 registerAuthCommands(program);
 registerAccountCommands(program);
