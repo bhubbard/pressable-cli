@@ -9,6 +9,7 @@ A modern, TypeScript-based command-line interface to interact with the Pressable
 - **Fetch API**: Uses native `fetch` (Node 18+) for cross-runtime compatibility.
 - **100% API Coverage**: Supports all documented endpoints in the Pressable API v1.
 - **Raw JSON Output**: All commands output pretty-printed JSON, perfect for piping into `jq`.
+- **Interactive Feedback**: Real-time terminal spinners during network requests.
 
 ## Installation
 
@@ -39,17 +40,28 @@ A modern, TypeScript-based command-line interface to interact with the Pressable
     npm link
     ```
 
-## Configuration
+## Authentication
 
-1. Create a `.env` file in the root of the project.
-2. Add your Pressable API credentials:
+The CLI supports two methods of authentication. The local configuration file is the preferred method for most users.
 
-    ```env
-    PRESSABLE_API_CLIENT_ID=your_client_id
-    PRESSABLE_API_CLIENT_SECRET=your_client_secret
-    ```
+### 1. Persistent Configuration (Preferred)
+Run the login command to securely save your credentials to `~/.pressable.json`:
 
-    Get your credentials from [my.pressable.com/api-applications](https://my.pressable.com/api-applications).
+```bash
+pressable auth-login --client-id <your_id> --client-secret <your_secret>
+```
+
+Other authentication commands:
+- `pressable auth-status` - Check current authentication status and source.
+- `pressable auth-logout` - Delete saved credentials.
+
+### 2. Environment Variables
+You can also use a `.env` file in the project root or set environment variables directly:
+
+```env
+PRESSABLE_API_CLIENT_ID=your_client_id
+PRESSABLE_API_CLIENT_SECRET=your_client_secret
+```
 
 ## Command Overview
 
@@ -127,17 +139,15 @@ The CLI provides comprehensive management for your Pressable account and sites.
 
 ## Development
 
-**Run with Node (Direct)**:
+The project includes a full suite of development tools:
 
-```bash
-npm run dev -- account
-```
+- `npm test` - Run unit tests with Vitest.
+- `npm run lint` - Run ESLint.
+- `npm run format` - Format code with Prettier.
 
-**Run with Bun**:
-
-```bash
-bun run bun:dev -- account
-```
+**Run from source**:
+- Node: `npm run dev -- <command>`
+- Bun: `bun run bun:dev -- <command>`
 
 ## License
 

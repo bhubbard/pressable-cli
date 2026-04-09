@@ -1,5 +1,11 @@
-export declare const getAccessToken: () => Promise<string | null>;
-export declare const makeRequest: <T = any>(endpoint: string, method?: string, data?: any) => Promise<T | null>;
+export declare class PressableError extends Error {
+    message: string;
+    statusCode?: number | undefined;
+    response?: any | undefined;
+    constructor(message: string, statusCode?: number | undefined, response?: any | undefined);
+}
+export declare const getAccessToken: () => Promise<string>;
+export declare const makeRequest: <T = any>(endpoint: string, method?: string, data?: any) => Promise<T>;
 export declare const getAccount: () => Promise<any>;
 export declare const updateAccount: (data: {
     php_version?: string;

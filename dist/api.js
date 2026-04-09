@@ -1,10 +1,27 @@
-import process from 'node:process';
+import { getCredentials } from './config.js';
 const API_BASE_URL = 'https://my.pressable.com';
+export class PressableError extends Error {
+    message;
+    statusCode;
+    response;
+    constructor(message, statusCode, response) {
+        super(message);
+        this.message = message;
+        this.statusCode = statusCode;
+        this.response = response;
+        this.name = 'PressableError';
+    }
+}
 export const getAccessToken = async () => {
+    const creds = getCredentials();
+    if (!creds) {
+        throw new PressableError('Missing Pressable API credentials. Please set PRESSABLE_API_CLIENT_ID and PRESSABLE_API_CLIENT_SECRET, or run "pressable auth login".');
+    }
+    const { clientId, clientSecret } = creds;
     try {
         const body = new URLSearchParams({
-            client_id: process.env.PRESSABLE_API_CLIENT_ID || '',
-            client_secret: process.env.PRESSABLE_API_CLIENT_SECRET || '',
+            client_id: clientId,
+            client_secret: clientSecret,
             grant_type: 'client_credentials'
         });
         const response = await fetch(`${API_BASE_URL}/auth/token`, {
@@ -16,45 +33,41 @@ export const getAccessToken = async () => {
         });
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            console.error('Error getting access token:', errorData);
-            return null;
+            throw new PressableError('Failed to get access token', response.status, errorData);
         }
         const data = (await response.json());
         return data.access_token;
     }
     catch (error) {
-        console.error('Error getting access token:', error.message);
-        return null;
+        if (error instanceof PressableError)
+            throw error;
+        throw new PressableError(`Error getting access token: ${error.message}`);
     }
 };
 export const makeRequest = async (endpoint, method = 'GET', data = {}) => {
+    const accessToken = await getAccessToken();
+    const options = {
+        method,
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        }
+    };
+    if (method !== 'GET' && method !== 'HEAD' && Object.keys(data).length > 0) {
+        options.body = JSON.stringify(data);
+    }
     try {
-        const accessToken = await getAccessToken();
-        if (!accessToken) {
-            return null;
-        }
-        const options = {
-            method,
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            }
-        };
-        if (method !== 'GET' && method !== 'HEAD' && Object.keys(data).length > 0) {
-            options.body = JSON.stringify(data);
-        }
         const response = await fetch(`${API_BASE_URL}/v1${endpoint}`, options);
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            console.error(`Error making request to ${endpoint}:`, errorData);
-            return null;
+            throw new PressableError(`Request to ${endpoint} failed`, response.status, errorData);
         }
-        // Return raw JSON as per user request
         return await response.json();
     }
     catch (error) {
-        console.error(`Error making request to ${endpoint}:`, error.message);
-        return null;
+        if (error instanceof PressableError)
+            throw error;
+        throw new PressableError(`Error making request to ${endpoint}: ${error.message}`);
     }
 };
 // 
