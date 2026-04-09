@@ -3,6 +3,7 @@
 A modern, TypeScript-based command-line interface to interact with the Pressable API. Built for Node.js and Bun.
 
 ## Features
+
 - **TypeScript & ESM**: Fully typed for better developer experience and modern standards.
 - **Bun Support**: Native support for the Bun runtime.
 - **Fetch API**: Uses native `fetch` (Node 18+) for cross-runtime compatibility.
@@ -11,37 +12,43 @@ A modern, TypeScript-based command-line interface to interact with the Pressable
 
 ## Installation
 
-1.  **Clone the repository**:
+1. **Clone the repository**:
+
     ```bash
     git clone https://github.com/your-username/pressable-cli.git
     cd pressable-cli
     ```
 
-2.  **Install dependencies**:
+2. **Install dependencies**:
+
     ```bash
     npm install
     # OR
     bun install
     ```
 
-3.  **Build the project**:
+3. **Build the project**:
+
     ```bash
     npm run build
     ```
 
-4.  **Link for global access**:
+4. **Link for global access**:
+
     ```bash
     npm link
     ```
 
 ## Configuration
 
-1.  Create a `.env` file in the root of the project.
-2.  Add your Pressable API credentials:
+1. Create a `.env` file in the root of the project.
+2. Add your Pressable API credentials:
+
     ```env
     PRESSABLE_API_CLIENT_ID=your_client_id
     PRESSABLE_API_CLIENT_SECRET=your_client_secret
     ```
+
     Get your credentials from [my.pressable.com/api-applications](https://my.pressable.com/api-applications).
 
 ## Command Overview
@@ -49,6 +56,7 @@ A modern, TypeScript-based command-line interface to interact with the Pressable
 The CLI provides comprehensive management for your Pressable account and sites.
 
 ### 👤 Account
+
 - `pressable account` - Get account details
 - `pressable account-update --php <v> --datacenter <id>` - Update default account settings
 - `pressable account-actions` - Get detailed account activity
@@ -57,6 +65,7 @@ The CLI provides comprehensive management for your Pressable account and sites.
 - `pressable php-versions` - List supported PHP versions
 
 ### 🏗️ Sites
+
 - `pressable sites [--search <term>] [--page <n>] [--limit <n>]` - List/search sites
 - `pressable site <siteId>` - Get site details
 - `pressable create-site --name <name>` - Create a new site
@@ -73,6 +82,7 @@ The CLI provides comprehensive management for your Pressable account and sites.
 - `pressable site-login <siteId>` - Get One-Press Login URL
 
 ### 💾 Backups
+
 - `pressable backups <siteId>` - List all backups
 - `pressable create-backup <siteId>` - Create a standard backup
 - `pressable restore-backup <siteId> <backupId>` - Restore a backup
@@ -81,6 +91,7 @@ The CLI provides comprehensive management for your Pressable account and sites.
 - `pressable site-ondemand-backup-download <siteId> <id>` - Get download link for on-demand backup
 
 ### 🔗 Domains & SFTP
+
 - `pressable site-domains <siteId>` - List domains
 - `pressable site-domain-add <siteId> <domain>` - Add a domain
 - `pressable site-domain-delete <siteId> <id>` - Remove a domain
@@ -89,6 +100,7 @@ The CLI provides comprehensive management for your Pressable account and sites.
 - `pressable site-sftp-reset <siteId> <user>` - Reset SFTP password
 
 ### 🔌 WordPress Management
+
 - `pressable plugins <siteId>` - List plugins
 - `pressable plugin-install <siteId> <slug>` - Install a plugin
 - `pressable plugin-activate <siteId> <slug>` - Activate a plugin
@@ -102,6 +114,7 @@ The CLI provides comprehensive management for your Pressable account and sites.
 - `pressable site-bash <siteId> "<command>"` - Run a Bash command on the server
 
 ### 📈 Monitoring & Utility
+
 - `pressable site-logs-php <siteId>` - Get PHP logs
 - `pressable site-logs-server <siteId>` - Get server logs
 - `pressable site-logs-activity <siteId>` - Get site activity logs
@@ -115,14 +128,17 @@ The CLI provides comprehensive management for your Pressable account and sites.
 ## Development
 
 **Run with Node (Direct)**:
+
 ```bash
 npm run dev -- account
 ```
 
 **Run with Bun**:
+
 ```bash
 bun run bun:dev -- account
 ```
 
 ## License
-ISC
+
+MIT
